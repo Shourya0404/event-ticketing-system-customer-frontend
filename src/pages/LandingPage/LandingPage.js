@@ -77,6 +77,7 @@ function LandingPage() {
             alt="logo"
             src={MetamaskLogo}
         />
+        <Button variant="contained" onClick={null}>Connect Wallet</Button>
         <Typography variant="subtitle1" gutterBottom>
             2. Fill in the password and keep it a secret.
         </Typography>
