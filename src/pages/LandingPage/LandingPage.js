@@ -17,6 +17,8 @@ import MetamaskLogo from '../../assets/metamask_logo.png';
 function LandingPage() {
     const navigate = useNavigate();
 
+    // metamask resource: https://dev.to/rounakbanik/building-a-web3-frontend-with-react-340c
+
     const handleLogin = () => {
       // login checks - metamask wallet connected, password field not empty
       navigate('/mytickets');
@@ -82,8 +84,9 @@ function LandingPage() {
             2. Fill in the password and keep it a secret.
         </Typography>
         <TextField
-            id="outlined"
+            id="password"
             label="Password"
+            type="password"
             defaultValue=""
         />
         <Button variant="contained" onClick={() => {handleLogin()}}>Login</Button>
