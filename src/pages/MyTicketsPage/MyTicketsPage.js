@@ -15,6 +15,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Header from '../../components/Header/Header'; 
 import Ticket from '../../components/Ticket/Ticket';
 
+import QRCodeComponent from '../../components/QRCodeComponent/QRCodeComponent';
+
+
 const tickets = ['ticket 1', 'ticket 2','ticket 1', 'ticket 2','ticket 1', 'ticket 2'];
 
 function MyTicketsPage() {
@@ -44,9 +47,10 @@ function MyTicketsPage() {
                     <DialogTitle id="alert-dialog-title">
                     {"Please present this QR-Code to the organizers..."}
                     </DialogTitle>
-                    <DialogContent>
+                    <DialogContent align = "center" justify = "center" alignItems = "center">
                     <DialogContentText id="alert-dialog-description">
-                        {/* PUT THE QR CODE COMPONENT HERE */}
+                        {/* QR CODE COMPONENT BELOW */}
+                        <QRCodeComponent value="dsgs23dsf3sdfDFG3254" size="250" />
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
