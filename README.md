@@ -2,10 +2,10 @@
 event-ticketing-system-customer-frontend
 
 ## To-do
-1. Create a Button to put ticket off-sale.
-2. Connect to the metamask wallet.
-3. Connect to the solidity contract.
-4. Call the relevant event capture API when calling solidity contract.
+1. [Thursday] Add Redux to the project.
+2. [Thursday] Connect to the metamask wallet.
+3. [Thursday] Connect to the solidity contract.
+4. [Thursday] Call the relevant event capture API when calling solidity contract.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
