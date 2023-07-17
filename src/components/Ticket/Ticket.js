@@ -5,18 +5,26 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 function BuyButton() {
     return (
-        <Button size="small">Buy Ticket</Button>
+        <Button size="small">Buy</Button>
     );
   }
 
 function SellButton() {
     return (
-        <Button size="small">Sell Ticket</Button>
+        <Button size="small">Sell</Button>
     );
   }
+
+function KeepButton() {
+    return (
+        <Button size="small">Keep</Button>
+    );
+  }
+
 
 function Ticket(props) {
   return (
@@ -37,7 +45,17 @@ function Ticket(props) {
       </CardContent>
       <CardActions>
         {/* <Button size="small">Sell Ticket</Button> */}
-        {props.action === "buy" ? <BuyButton /> : <SellButton />}
+        {props.action === "buy" ? <BuyButton /> : 
+        <>
+          <TextField
+            size="small"
+            id="price"
+            label="Price"
+            defaultValue=""
+          />
+          <SellButton />
+          <KeepButton />
+        </>}
       </CardActions>
     </Card>
   );
