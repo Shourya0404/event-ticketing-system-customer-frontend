@@ -26,7 +26,7 @@ function LandingPage(props) {
     navigate('/mytickets');
   };
 
-  const initialState = { accounts: JSON.parse(localStorage.getItem("walletData")).accounts }
+  const initialState = { accounts: '' }
   const [wallet, setWallet] = useState(initialState)
   const [error, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
