@@ -98,7 +98,7 @@ function Ticket(props) {
           onSale: {props._onSale ? "Yes" : "No"}
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Event details: XYZ Concert (13/10/23 9:00-18:00)
+          Event details: {process.env.REACT_APP_EVENT_DETAILS}
         </Typography>
       </CardContent>
       <CardActions>

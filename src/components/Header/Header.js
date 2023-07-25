@@ -54,6 +54,7 @@ function Header() {
 
     const handleLogout = () => {
       // logout - clear the metamask id, secret hash
+      localStorage.setItem("passwordHash", "")
       navigate('/');
     };
 
