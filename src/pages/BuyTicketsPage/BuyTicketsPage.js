@@ -12,6 +12,8 @@ import Ticketing from '../../assets/Ticketing.json';
 import Header from '../../components/Header/Header';
 import Ticket from '../../components/Ticket/Ticket';
 
+import axios from 'axios';
+
 function BuyTicketsPage() {
 
     const [ticketsOnSale, setTicketsOnSale] = useState([{ _ticketId: '', _price: '', _onSale: false }])
@@ -65,8 +67,34 @@ function BuyTicketsPage() {
                 alert('All the tickets for this event have been sold.')
             }
             else {
-                await contract.buyTicketFromOrganizer(
+                let response = await contract.buyTicketFromOrganizer(
                     JSON.parse(localStorage.getItem("walletData")).accounts[0], { value: JSON.parse(localStorage.getItem("primaryTicketPrice")) });
+                
+                // LOG MINT TICKET
+                const body = {
+                    contract_id: process.env.REACT_APP_CONTRACT_ADDRESS,
+                    to_wallet_id: JSON.parse(localStorage.getItem("walletData")).accounts[0],
+                    ticket_id: "",
+                    data: {
+                        value: parseInt(response.value._hex),
+                        gas_fees: parseInt(response.gasPrice._hex)
+                    }
+                }
+
+                axios.post(process.env.REACT_APP_EVENT_CAPTURE_BACKEND_URL+"/mintticket", 
+                    body,
+                    {
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        }
+                    })
+                    .then((response) => response.data)
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch((err) => {
+                        alert(err.message);
+                    });
             }
         } catch (e) {
             console.log("Err: ", e)

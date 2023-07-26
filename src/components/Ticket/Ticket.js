@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
+import axios from 'axios';
+
 function BuyButton(props) {
   const buyTicketOnSale = async () => {
     //ethereum is usable get reference to the contract
@@ -16,8 +18,35 @@ function BuyButton(props) {
     const signer = provider.getSigner()
     const contract = new ethers.Contract(process.env.REACT_APP_CONTRACT_ADDRESS, Ticketing.abi, signer);
     try {
-      await contract.buyOnSaleTicket(
-        props._ticketId);
+      var response = await contract.buyOnSaleTicket(
+        props._ticketId, { value: props._price});
+      
+      // LOG TRANSFER TICKET
+      const body = {
+        contract_id: process.env.REACT_APP_CONTRACT_ADDRESS,
+        from_wallet_id: await contract.ownerOf(props._ticketId),
+        to_wallet_id: JSON.parse(localStorage.getItem("walletData")).accounts[0],
+        ticket_id: props._ticketId,
+        data: {
+          value: props._price,
+          gas_fees: parseInt(response.gasPrice._hex)
+        }
+      }
+
+      axios.post(process.env.REACT_APP_EVENT_CAPTURE_BACKEND_URL+"/transferticket", 
+        body,
+        {
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        })
+        .then((response) => response.data)
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
     } catch (e) {
       console.log("Err: ", e)
     }
@@ -40,7 +69,32 @@ function SellButton(props) {
       }
       else {
         try {
-          await contract.sellTicket(props._ticketId, props._price);
+          var response = await contract.sellTicket(props._ticketId, props._price);
+
+          // LOG ON-SALE TICKET
+          const body = {
+            contract_id: process.env.REACT_APP_CONTRACT_ADDRESS,
+            from_wallet_id: JSON.parse(localStorage.getItem("walletData")).accounts[0],
+            ticket_id: props._ticketId,
+            data: {
+              gas_fees: parseInt(response.gasPrice._hex)
+            }
+          }
+
+          axios.post(process.env.REACT_APP_EVENT_CAPTURE_BACKEND_URL+"/onsaleticket", 
+            body,
+            {
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            })
+            .then((response) => response.data)
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                alert(err.message);
+            });
         } catch (e) {
           console.log("Err: ", e)
         }
@@ -62,7 +116,32 @@ function KeepButton(props) {
     const signer = provider.getSigner()
     const contract = new ethers.Contract(process.env.REACT_APP_CONTRACT_ADDRESS, Ticketing.abi, signer);
     try {
-      await contract.cancelSale(props._ticketId);
+      var response = await contract.cancelSale(props._ticketId);
+
+      // LOG OFF-SALE TICKET
+      const body = {
+        contract_id: process.env.REACT_APP_CONTRACT_ADDRESS,
+        from_wallet_id: JSON.parse(localStorage.getItem("walletData")).accounts[0],
+        ticket_id: props._ticketId,
+        data: {
+          gas_fees: parseInt(response.gasPrice._hex)
+        }
+      }
+
+      axios.post(process.env.REACT_APP_EVENT_CAPTURE_BACKEND_URL+"/offsaleticket", 
+        body,
+        {
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        })
+        .then((response) => response.data)
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
     } catch (e) {
       console.log("Err: ", e)
     }
@@ -103,7 +182,7 @@ function Ticket(props) {
       </CardContent>
       <CardActions>
         {/* <Button size="small">Sell Ticket</Button> */}
-        {props.action === "buy" ? <BuyButton _ticketId={props._ticketId} /> :
+        {props.action === "buy" ? <BuyButton _ticketId={props._ticketId} _price={props._price}/> :
           <>
             <TextField
               size="small"

@@ -48,7 +48,7 @@ function LandingPage(props) {
                   navigate('/mytickets');
                 })
                 .catch((err) => {
-                  console.log(err.message);
+                  alert(err.message);
                 });
   };
 
