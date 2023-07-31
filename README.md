@@ -1,77 +1,33 @@
 # event-ticketing-system-customer-frontend
-event-ticketing-system-customer-frontend
+## Event Ticketing System Customer Frontend
 
-## To-do
-1. [Thursday] Add Redux to the project.
-2. ~~[Thursday] Connect to the metamask wallet.~~
-3. ~~[Thursday] Connect to the solidity contract.~~
-4. [Thursday] Call the relevant event capture API when calling solidity contract.
+## Setup
+1. Follow the setups for these:
+   - Smart Contract: Deploy a local blockchain and deploy smart contract on this local node: 
+   - Verification Backend: https://github.com/bratinghosh/event-ticketing-system-verification-backend/tree/main
+   - Event Capture Backend: https://github.com/bratinghosh/event-ticketing-system-event-capture-backend
+Make sure the backends are running and the smart contract is deployed in the local node before starting the frontend
+    
+2. Download the npm packages:
+```
+npm install
+```
+3. Create `.env` file and the following:
+```
+PORT=3000
+REACT_APP_CONTRACT_ADDRESS: Obtained when smart contract is deployed on local blockchain
+REACT_APP_EVENT_DETAILS = "Event Name (DD/MM/YY START_TIME-END_TIME)"
+REACT_APP_VERIFICATION_BACKEND_URL = <URL>
+REACT_APP_EVENT_CAPTURE_BACKEND_URL = <URL>
+```
+## Start Server in Local Machine
+`npm start`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Packages
+* @metamask/detect-provider
+* @metamask/sdk
+* axios
+* crypto-js
+* ethers
+* react-qr-code
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
