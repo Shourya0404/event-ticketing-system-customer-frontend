@@ -15,15 +15,41 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import Logo from '../../assets/logo.png';
 import MetamaskLogo from '../../assets/metamask_logo.png';
 
+import sha256 from 'crypto-js/sha256';
+import Base64 from 'crypto-js/enc-base64';
+
+import axios from "axios";
+
 
 function LandingPage(props) {
   const navigate = useNavigate();
 
   // metamask resource: https://dev.to/rounakbanik/building-a-web3-frontend-with-react-340c
 
+  const [passwordHash, setPasswordHash] = useState("");
+
+  const handlePasswordChange = (event) => {
+    const { value } = event.target;
+    // generate SHA256 hash of the password
+    const hash = Base64.stringify(sha256(value));
+    setPasswordHash(hash);
+  };
+
   const handleLogin = () => {
-    // login checks - metamask wallet connected, password field not empty
-    navigate('/mytickets');
+    axios.post(process.env.REACT_APP_VERIFICATION_BACKEND_URL+"/login", 
+                {
+                  wallet_address: wallet.accounts[0],
+                  password_hash: passwordHash
+                })
+                .then((response) => response.data)
+                .then((data) => {
+                  // console.log(data);
+                  localStorage.setItem("passwordHash", passwordHash);
+                  navigate('/mytickets');
+                })
+                .catch((err) => {
+                  alert(err.message);
+                });
   };
 
   const initialState = { accounts: '' }
@@ -145,6 +171,7 @@ function LandingPage(props) {
               label="Password"
               type="password"
               defaultValue=""
+              onChange={handlePasswordChange}
             />
             <Button variant="contained" onClick={() => { handleLogin() }}>Login</Button>
           </Stack>

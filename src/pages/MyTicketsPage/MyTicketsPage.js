@@ -19,10 +19,30 @@ import Ticket from '../../components/Ticket/Ticket';
 
 import QRCodeComponent from '../../components/QRCodeComponent/QRCodeComponent';
 
+import axios from "axios";
+
 function MyTicketsPage() {
     const [open, setOpen] = React.useState(false);
     const [ownedTickets, setOwnedTickets] = useState([])
+    const [qrCodeValue, setQrCodeValue] = useState("")
+
+    async function getQrCodeData() {
+        axios.post(process.env.REACT_APP_VERIFICATION_BACKEND_URL+"/id", 
+            {
+                wallet_address: JSON.parse(localStorage.getItem("walletData")).accounts[0],
+                password_hash: localStorage.getItem("passwordHash")
+            })
+            .then((response) => response.data)
+            .then((data) => {
+              setQrCodeValue(data.id);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+    }
+
     const handleClickOpen = () => {
+        getQrCodeData();
         setOpen(true);
     };
 
@@ -75,10 +95,10 @@ function MyTicketsPage() {
                         <DialogTitle id="alert-dialog-title">
                             {"Please present this QR-Code to the organizers..."}
                         </DialogTitle>
-                        <DialogContent align="center" justify="center" alignItems="center">
+                        <DialogContent align="center" justify="center" alignitems="center">
                             <DialogContentText id="alert-dialog-description">
                                 {/* QR CODE COMPONENT BELOW */}
-                                <QRCodeComponent value="dsgs23dsf3sdfDFG3254" size="250" />
+                                <QRCodeComponent value={qrCodeValue} size={250} />
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
