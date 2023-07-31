@@ -53,7 +53,7 @@ function BuyTicketsPage() {
             }
         }
         getTicketsOnSale()
-    }, [mintedTicketsCount])
+    }, [])
 
     const mintTicket = async () => {
         //ethereum is usable get reference to the contract
